@@ -1,15 +1,21 @@
-on: [push]
+name: Action Sample
+
+on:
+  push:
+    branches: 
+      - work
+      - main
+  workflow_dispatch:
 
 jobs:
-  hello_world_job:
+  print-hello-world:
     runs-on: ubuntu-latest
-    name: A job to say hello
     steps:
-      - name: Hello world action step
-        id: hello
-        uses: actions/hello-world-docker-actionv2
-        with:
-          who-to-greet: 'Mona the Octocat'
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: ls
+        run: ls -l
+      - name: execute echo command
+        run: echo "Hello World!"
+      - name: docker build
+        run: docker build -t test .
